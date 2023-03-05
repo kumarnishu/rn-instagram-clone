@@ -1,2 +1,3 @@
 ## instagram clone React Native And Firebase
-![WhatsApp Image 2023-03-05 at 5 04 53 PM](https://user-images.githubusercontent.com/45355788/222958073-ca54d08d-f417-49a0-87a9-2751176a334a.jpeg)
+
+![Screenshot from 2023-03-05 17-06-15](https://user-images.githubusercontent.com/45355788/222958131-bd8ac10d-1d77-4fb7-9741-6d16a079bfe6.png)
