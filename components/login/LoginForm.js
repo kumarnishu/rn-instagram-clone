@@ -1,18 +1,30 @@
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native'
+import React, { useContext } from 'react'
 import { Formik } from 'formik'
 import * as yup from "yup";
+import { auth } from '../../firebase';
+import { signInWithEmailAndPassword } from '@firebase/auth';
+import { UserContext } from "../../contexts/UserContext"
 
 const LoginFormSchema = yup.object({
   email: yup.string().email('provide an valid email').required("required field"),
   password: yup.string().min(8, 'password should be minimum 8 characters').required('required field')
 })
 const LoginForm = ({ navigation }) => {
+  const { setUser } = useContext(UserContext)
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={LoginFormSchema}
-      onSubmit={values => console.log(values)}
+      onSubmit={async (values) => {
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password)
+          setUser(userCredential.user)
+        }
+        catch (error) {
+          Alert.alert("invalid username and password")
+        }
+      }}
     >
       {({ handleChange, errors, touched, handleBlur, handleSubmit, values, isValid }) => (
         <>
@@ -56,7 +68,7 @@ const LoginForm = ({ navigation }) => {
           </View>
         </>
       )}
-    </Formik>
+    </Formik >
   )
 }
 const styles = {

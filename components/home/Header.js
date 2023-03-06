@@ -1,11 +1,20 @@
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebase"
+import { UserContext } from "../../contexts/UserContext"
 
 const Header = ({ navigation }) => {
+  const { setUser } = useContext(UserContext)
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            signOut(auth)
+            setUser(null)
+          }}
+        >
           <Text style={styles.logo}>INSTAGRAM</Text>
         </TouchableOpacity>
 

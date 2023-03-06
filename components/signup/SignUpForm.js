@@ -1,19 +1,44 @@
 import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native'
-import React from 'react'
 import { Formik } from 'formik'
 import * as yup from "yup";
+import { auth, db } from '../../firebase';
+import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { addDoc, collection } from '@firebase/firestore';
+import { Alert } from 'react-native';
+import { UserContext } from "../../contexts/UserContext"
 
+
+const getRandomAvatar = async () => {
+    const res = await fetch("https://randomuser.me/api")
+    const data = await res.json()
+    return data.results[0].picture.large
+}
 const SignUpFormSchema = yup.object({
     email: yup.string().email('provide an valid email').required("required field"),
     username: yup.string().min(4, "should be of  minimum 4 characters").required('required field'),
     password: yup.string().min(8, 'password should be of minimum 8 characters').required('required field')
 })
 const SignUpForm = ({ navigation }) => {
+    const { setUser } = useContext(UserContext)
     return (
         <Formik
             initialValues={{ email: '', username: '', password: '' }}
             validationSchema={SignUpFormSchema}
-            onSubmit={values => console.log(values)}
+            onSubmit={async (values) => {
+                try {
+                    const response = await createUserWithEmailAndPassword(auth, values.email, values.password)
+                    setUser(response.user)
+                    await addDoc(collection(db, "users"), {
+                        id: response.user.uid,
+                        username: values.username,
+                        email: values.email,
+                        password: values.password,
+                        profile_picture: await getRandomAvatar()
+                    });
+                } catch (e) {
+                    Alert.alert("Error while Signing Up, Try Again with different username or email")
+                }
+            }}
         >
             {({ handleChange, errors, touched, handleBlur, handleSubmit, values, isValid }) => (
                 <>
