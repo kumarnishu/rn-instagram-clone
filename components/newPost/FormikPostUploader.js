@@ -1,15 +1,13 @@
-
-import { View, Text, TextInput, Button, Image } from 'react-native'
+import { View, Text, TextInput, Button, Image, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import * as yup from 'yup'
 import { Formik } from 'formik'
-
 const Schema = yup.object({
     imageUrl: yup.string().url().required("a valid image url is required"),
     caption: yup.string().max(2200, "caption limit is reached")
 })
 
-const FormikPostUploader = () => {
+const FormikPostUploader = ({ navigation }) => {
     const [imageUrl, setImageUrl] = useState()
     return (
         <>
@@ -19,11 +17,14 @@ const FormikPostUploader = () => {
                     caption: ""
                 }}
                 validationSchema={Schema}
-                onSubmit={values => console.log(values)}
-                validateOnMount={true}
+                onSubmit={
+                    values => {
+                        console.log(values)
+                        navigation.goBack()
+                    }}
             >
                 {({ handleChange, errors, handleBlur, handleSubmit, values, isValid }) => (
-                    <View>
+                    <ScrollView>
                         <View style={styles.imageContainer}>
                             <Image
                                 style={{
@@ -32,12 +33,13 @@ const FormikPostUploader = () => {
                                     margin: 5,
                                     resizeMode: 'cover'
                                 }}
-                                source={{ uri: imageUrl ? imageUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJiT-UHSm6w0Jperb8SitpfoAKeMUE3uynPg5YO-2Drw&s" }}
+                                source={{ uri: yup.string().url(imageUrl) ? imageUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJiT-UHSm6w0Jperb8SitpfoAKeMUE3uynPg5YO-2Drw&s" }}
                             />
                         </View>
                         <View style={styles.inputContainer}>
                             <Text style={styles.text} >Image Url</Text>
                             <TextInput
+                                placeholder='Provide a valid Image Url'
                                 style={styles.input}
                                 onChange={(e) => { setImageUrl(e.nativeEvent.text) }}
                                 onChangeText={
@@ -54,6 +56,7 @@ const FormikPostUploader = () => {
                         <View style={styles.inputContainer}>
                             <Text style={styles.text}>About Image</Text>
                             <TextInput
+                                placeholder='Write something about your post'
                                 onChangeText={handleChange('caption')}
                                 onBlur={handleBlur('caption')}
                                 value={values.caption}
@@ -67,11 +70,10 @@ const FormikPostUploader = () => {
 
                             <Button onPress={handleSubmit} title="Share" disabled={!isValid} />
                         </View>
-                    </View>
+                    </ScrollView>
                 )}
             </Formik>
         </>
-
     )
 }
 
@@ -81,8 +83,10 @@ const styles = {
     },
     input: {
         fontSize: 20,
+        padding: 5,
         backgroundColor: 'lightgrey',
-        marginBottom: 5
+        marginVertical: 5,
+        borderRadius: 10
     },
     text: {
         color: 'white'

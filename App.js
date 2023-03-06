@@ -1,7 +1,6 @@
-import NewPostScreen from './screens/NewPostScreen';
-
+import Navigation from "./Navigation";
 export default function App() {
   return (
-    <NewPostScreen/>
+    <Navigation />
   );
 }

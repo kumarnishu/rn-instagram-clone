@@ -7,10 +7,10 @@ import { posts } from "../data/posts"
 import { ScrollView } from 'react-native';
 import BottomTabIcons from '../components/home/BottomTabIcons';
 import { users } from '../data/users';
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
-            <Header />
+            <Header navigation={navigation} />
             <ScrollView>
                 <Stories />
                 {posts && posts.map((post, index) => {

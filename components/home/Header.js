@@ -1,7 +1,7 @@
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native'
 import React from 'react'
 
-const Header = () => {
+const Header = ({ navigation }) => {
   return (
     <>
       <View style={styles.container}>
@@ -10,7 +10,8 @@ const Header = () => {
         </TouchableOpacity>
 
         <View style={styles.iconContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.push('NewPostScreen')}>
             <Image
               style={styles.icons}
               source={{ uri: "https://img.icons8.com/ios-filled/50/null/plus-2-math.png" }}
@@ -52,9 +53,9 @@ const styles = StyleSheet.create({
   },
   logo: {
     color: 'white',
-    fontSize:25,
-    fontWeight:'bold',
-    marginStart:5
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginStart: 5
   },
   icons: {
     width: 30,
