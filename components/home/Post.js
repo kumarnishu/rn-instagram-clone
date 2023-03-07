@@ -30,7 +30,7 @@ const PostHeader = ({ post }) => {
                         uri: post.profile_picture
                     }}
                 />
-                <Text style={{ color: 'white', paddingLeft: 10 }}>{post.user}</Text>
+                <Text style={{ color: 'white', paddingLeft: 10 }}>{post.username}</Text>
             </View>
             <Text style={{ color: 'white' }}>...</Text>
         </View>
@@ -98,7 +98,7 @@ const PostFooter = ({ post }) => {
                     <Text style={{
                         color: 'white',
                         fontWeight: '600',
-                    }}>{post.user + " "}
+                    }}>{post.username + " "}
                         <Text style={{
                             color: 'lightgrey',
                             fontSize: 12

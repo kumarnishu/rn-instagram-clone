@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import FormikPostUploader from './FormikPostUploader'
+import { UserContext } from "../../contexts/UserContext"
 
 const AddNewPost = ({ navigation }) => {
     return (
@@ -11,20 +12,21 @@ const AddNewPost = ({ navigation }) => {
 }
 
 const Header = ({ navigation }) => {
+    const { user } = useContext(UserContext)
     return (
         <>
             <View style={styles.headerContainer}>
                 <TouchableOpacity
-                    onPress={() => navigation.goBack()}
+                    onPress={() => navigation.push('HomeScreen')}
                 >
-                    <Image  
+                    <Image
                         style={styles.icon}
                         source={{ uri: "https://img.icons8.com/ios-filled/50/null/chevron-left.png" }}
                     />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', fontSize: 25, marginLeft: 60 }}>NEW POST</Text>
             </View>
-            <FormikPostUploader navigation={navigation }/>
+            <FormikPostUploader navigation={navigation} user={user} />
         </>
     )
 }

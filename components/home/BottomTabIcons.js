@@ -1,11 +1,9 @@
 import { View, TouchableOpacity, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 
-const BottomTabIcons = ({ user }) => {
+const BottomTabIcons = ({user}) => {
     const [activeTab, setActiveTab] = useState('Home')
     return (
-
-
         <View style={{
             flexDirection: 'row',
             justifyContent: 'space-around',
@@ -26,7 +24,7 @@ const BottomTabIcons = ({ user }) => {
                         height: 30,
                         margin: 5,
                         borderRadius: 8,
-                        backgroundColor: activeTab === 'Home' ? 'orange' : 'white'
+                        backgroundColor: activeTab === 'Home' ? 'orange' : 'grey'
                     }}
                     source={{ uri: "https://img.icons8.com/sf-regular-filled/48/null/home-page.png" }}
                 />
@@ -40,7 +38,7 @@ const BottomTabIcons = ({ user }) => {
                         height: 30,
                         margin: 5,
                         borderRadius: 8,
-                        backgroundColor: activeTab === 'Search' ? 'orange' : 'white'
+                        backgroundColor: activeTab === 'Search' ? 'orange' : 'grey'
                     }}
                     source={{ uri: "https://img.icons8.com/material-outlined/48/null/search--v1.png" }}
                 />
@@ -54,7 +52,7 @@ const BottomTabIcons = ({ user }) => {
                         height: 30,
                         margin: 5,
                         borderRadius: 8,
-                        backgroundColor: activeTab === 'Reels' ? 'orange' : 'white'
+                        backgroundColor: activeTab === 'Reels' ? 'orange' : 'grey'
                     }}
                     source={{ uri: "https://img.icons8.com/ios-filled/50/null/instagram-reel.png" }}
                 />
@@ -68,7 +66,7 @@ const BottomTabIcons = ({ user }) => {
                         height: 30,
                         margin: 5,
                         borderRadius: 8,
-                        backgroundColor: activeTab === 'Cart' ? 'orange' : 'white'
+                        backgroundColor: activeTab === 'Cart' ? 'orange' : 'grey'
                     }}
                     source={{ uri: "https://img.icons8.com/ios-filled/50/null/shopping-bag.png" }}
                 />
@@ -82,9 +80,9 @@ const BottomTabIcons = ({ user }) => {
                         height: 35,
                         margin: 5,
                         borderRadius: 50,
-                        backgroundColor: activeTab === 'Avatar' ? 'orange' : 'white'
+                        backgroundColor: activeTab === 'Avatar' ? 'orange' : 'grey'
                     }}
-                    source={{ uri: user.image }}
+                    source={{ uri: user.profile_picture }}
                 />
             </TouchableOpacity>
         </View>

@@ -1,4 +1,4 @@
-import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native'
+import { View, Image, TouchableOpacity, StyleSheet, Text, Alert } from 'react-native'
 import React, { useContext } from 'react'
 import { signOut } from "firebase/auth"
 import { auth } from "../../firebase"
@@ -10,8 +10,12 @@ const Header = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => {
-            signOut(auth)
+          onPress={async() => {
+            await signOut(auth).then(() => {
+              Alert.alert("logged out")
+            }).catch((error) => {
+              Alert.alert(error)
+            });
             setUser(null)
           }}
         >
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     margin: 5,
-    backgroundColor: 'white',
+    backgroundColor: 'grey',
     borderRadius: 10
   },
   badge: {

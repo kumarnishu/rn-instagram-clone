@@ -3,9 +3,10 @@ import { Formik } from 'formik'
 import * as yup from "yup";
 import { auth, db } from '../../firebase';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import { addDoc, collection } from '@firebase/firestore';
+import {  collection, doc, setDoc } from '@firebase/firestore';
 import { Alert } from 'react-native';
 import { UserContext } from "../../contexts/UserContext"
+import { useContext } from 'react';
 
 
 const getRandomAvatar = async () => {
@@ -21,20 +22,22 @@ const SignUpFormSchema = yup.object({
 const SignUpForm = ({ navigation }) => {
     const { setUser } = useContext(UserContext)
     return (
-        <Formik
+        <Formik 
             initialValues={{ email: '', username: '', password: '' }}
             validationSchema={SignUpFormSchema}
             onSubmit={async (values) => {
                 try {
                     const response = await createUserWithEmailAndPassword(auth, values.email, values.password)
-                    setUser(response.user)
-                    await addDoc(collection(db, "users"), {
+                    let document = {
                         id: response.user.uid,
                         username: values.username,
                         email: values.email,
                         password: values.password,
                         profile_picture: await getRandomAvatar()
-                    });
+                    }
+                    const usersRef = collection(db, "users");
+                    await setDoc(doc(usersRef, document.email), document);
+                    setUser(document)
                 } catch (e) {
                     Alert.alert("Error while Signing Up, Try Again with different username or email")
                 }

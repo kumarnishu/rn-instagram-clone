@@ -2,9 +2,10 @@ import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-na
 import React, { useContext } from 'react'
 import { Formik } from 'formik'
 import * as yup from "yup";
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { UserContext } from "../../contexts/UserContext"
+import { collection, doc, getDoc, query, where } from 'firebase/firestore';
 
 const LoginFormSchema = yup.object({
   email: yup.string().email('provide an valid email').required("required field"),
@@ -19,7 +20,9 @@ const LoginForm = ({ navigation }) => {
       onSubmit={async (values) => {
         try {
           const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password)
-          setUser(userCredential.user)
+          const docRef = doc(db, "users", userCredential.user.email);
+          const docSnap = await getDoc(docRef);
+          setUser(docSnap.data())
         }
         catch (error) {
           Alert.alert("invalid username and password")

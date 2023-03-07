@@ -2,12 +2,16 @@ import { View, Text, TextInput, Button, Image, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import * as yup from 'yup'
 import { Formik } from 'formik'
+import { db } from '../../firebase';
+import { collection, doc, setDoc } from '@firebase/firestore';
+
+
 const Schema = yup.object({
     imageUrl: yup.string().url().required("a valid image url is required"),
     caption: yup.string().max(2200, "caption limit is reached")
 })
 
-const FormikPostUploader = ({ navigation }) => {
+const FormikPostUploader = ({ navigation, user }) => {
     const [imageUrl, setImageUrl] = useState()
     return (
         <>
@@ -18,9 +22,35 @@ const FormikPostUploader = ({ navigation }) => {
                 }}
                 validationSchema={Schema}
                 onSubmit={
-                    values => {
-                        console.log(values)
-                        navigation.goBack()
+                    async (values) => {
+                        try {
+                            let document = {
+                                id: String(Date.now()),
+                                imageUrl: values.imageUrl,
+                                caption: values.caption,
+                                username: user.username,
+                                likes: Math.floor(Math.random() * 100007979),
+                                profile_picture: user.profile_picture,
+                                comments: [
+                                    {
+                                        user: 'i.aman',
+                                        image: 'https://robohash.org/etlaboriosamodio.png?size=50x50&set=set1',
+                                        comment: 'Wow! this build looks fire.Super excited about this journey'
+                                    },
+                                    {
+                                        user: 'i.nisha.me',
+                                        image: 'https://robohash.org/etlaboriosamodio.png?size=50x50&set=set1',
+                                        comment: 'this is another comment excited about this journey'
+                                    }
+                                ]
+                            }
+                            const postRef = collection(db, "posts");
+                            await setDoc(doc(postRef, document.id), document);
+                            navigation.push('HomeScreen')
+                        }
+                        catch (err) {
+                            console.log(err)
+                        }
                     }}
             >
                 {({ handleChange, errors, handleBlur, handleSubmit, values, isValid }) => (
@@ -72,7 +102,7 @@ const FormikPostUploader = ({ navigation }) => {
                         </View>
                     </ScrollView>
                 )}
-            </Formik>
+            </Formik >
         </>
     )
 }
@@ -84,6 +114,7 @@ const styles = {
     input: {
         fontSize: 20,
         padding: 5,
+        paddingLeft: 20,
         backgroundColor: 'lightgrey',
         marginVertical: 5,
         borderRadius: 10
