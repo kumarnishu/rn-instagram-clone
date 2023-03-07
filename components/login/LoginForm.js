@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Button, Alert, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useContext } from 'react'
 import { Formik } from 'formik'
 import * as yup from "yup";
@@ -74,7 +74,7 @@ const LoginForm = ({ navigation }) => {
     </Formik >
   )
 }
-const styles = {
+const styles = StyleSheet.create({
   input: {
     padding: 10,
     borderWidth: 1,
@@ -86,5 +86,5 @@ const styles = {
   errorText: {
     color: 'red',
   }
-}
+})
 export default LoginForm

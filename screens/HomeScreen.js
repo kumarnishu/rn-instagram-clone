@@ -4,7 +4,7 @@ import Header from "../components/home/Header";
 import Stories from "../components/home/Stories"
 import Post from '../components/home/Post';
 import { collection, getDocs } from "firebase/firestore";
-import { ScrollView } from 'react-native';
+import { ScrollView, RefreshControl, } from 'react-native';
 import BottomTabIcons from '../components/home/BottomTabIcons';
 import { UserContext } from '../contexts/UserContext';
 import { db } from '../firebase';
@@ -12,6 +12,14 @@ import { db } from '../firebase';
 const HomeScreen = ({ navigation }) => {
     const { user } = useContext(UserContext)
     const [posts, setPosts] = useState([])
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
     useEffect(() => {
         async function getPosts() {
@@ -25,13 +33,21 @@ const HomeScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header navigation={navigation} />
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
+            >
                 <Stories />
-                {posts && posts.map((post, index) => {
-                    return (
-                        <Post post={post} key={post.id} />
-                    )
-                })}
+                {!refreshing ?
+                    <>
+                        {posts && posts.map((post) => {
+                            return (
+                                <Post post={post} key={post.id} />
+                            )
+                        })}
+                    </>
+                    : null}
             </ScrollView>
             <BottomTabIcons user={user} />
         </SafeAreaView>

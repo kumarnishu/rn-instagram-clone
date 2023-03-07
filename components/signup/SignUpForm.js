@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from 'react-native'
 import { Formik } from 'formik'
 import * as yup from "yup";
 import { auth, db } from '../../firebase';
@@ -96,7 +96,7 @@ const SignUpForm = ({ navigation }) => {
         </Formik>
     )
 }
-const styles = {
+const styles = StyleSheet.create({
     input: {
         padding: 10,
         borderWidth: 1,
@@ -108,5 +108,5 @@ const styles = {
     errorText: {
         color: 'red',
     }
-}
+})
 export default SignUpForm

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React, { useContext } from 'react'
 import FormikPostUploader from './FormikPostUploader'
 import { UserContext } from "../../contexts/UserContext"
@@ -30,7 +30,7 @@ const Header = ({ navigation }) => {
         </>
     )
 }
-const styles = {
+const styles = StyleSheet.create({
     icon: {
         width: 30,
         height: 30,
@@ -45,6 +45,6 @@ const styles = {
         marginTop: 20,
         marginLeft: 20
     }
-}
+})
 
 export default AddNewPost

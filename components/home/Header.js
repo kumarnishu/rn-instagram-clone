@@ -27,7 +27,7 @@ const Header = ({ navigation }) => {
             onPress={() => navigation.push('NewPostScreen')}>
             <Image
               style={styles.icons}
-              source={{ uri: "https://img.icons8.com/ios-filled/50/null/plus-2-math.png" }}
+              source={{ uri: "https://img.icons8.com/ios/50/null/plus-2-math.png" }}
             />
           </TouchableOpacity>
           <TouchableOpacity>
@@ -50,6 +50,7 @@ const Header = ({ navigation }) => {
     </>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     margin: 5,
-    backgroundColor: 'grey',
+    backgroundColor: 'orange',
     borderRadius: 10
   },
   badge: {
