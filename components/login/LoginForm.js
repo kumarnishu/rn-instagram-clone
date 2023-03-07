@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { auth, db } from '../../firebase';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { UserContext } from "../../contexts/UserContext"
-import { collection, doc, getDoc, query, where } from 'firebase/firestore';
+import {  doc, getDoc,  } from 'firebase/firestore';
 
 const LoginFormSchema = yup.object({
   email: yup.string().email('provide an valid email').required("required field"),
@@ -29,7 +29,7 @@ const LoginForm = ({ navigation }) => {
         }
       }}
     >
-      {({ handleChange, errors, touched, handleBlur, handleSubmit, values, isValid }) => (
+      {({ handleChange, errors, touched, handleBlur, handleSubmit, values, isValid, isSubmitting }) => (
         <>
           <View style={{ padding: 20 }}>
             <TextInput style={styles.input}
@@ -57,7 +57,7 @@ const LoginForm = ({ navigation }) => {
               {errors.password && touched.password && errors.password ? errors.password : ""}
             </Text>
             <Text style={{ textAlign: 'right', margin: 10, color: '#6880F5', fontWeight: '600' }}>Forgot password?</Text>
-            <Button onPress={handleSubmit} disabled={!isValid} title="Log in" />
+            <Button onPress={handleSubmit} disabled={!isValid} title={isSubmitting ? "Logging in..." : "Log in"} />
           </View>
 
           {/* bottom view */}

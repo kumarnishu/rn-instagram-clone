@@ -3,7 +3,7 @@ import { Formik } from 'formik'
 import * as yup from "yup";
 import { auth, db } from '../../firebase';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import {  collection, doc, setDoc } from '@firebase/firestore';
+import { collection, doc, setDoc } from '@firebase/firestore';
 import { Alert } from 'react-native';
 import { UserContext } from "../../contexts/UserContext"
 import { useContext } from 'react';
@@ -22,7 +22,7 @@ const SignUpFormSchema = yup.object({
 const SignUpForm = ({ navigation }) => {
     const { setUser } = useContext(UserContext)
     return (
-        <Formik 
+        <Formik
             initialValues={{ email: '', username: '', password: '' }}
             validationSchema={SignUpFormSchema}
             onSubmit={async (values) => {
@@ -43,7 +43,7 @@ const SignUpForm = ({ navigation }) => {
                 }
             }}
         >
-            {({ handleChange, errors, touched, handleBlur, handleSubmit, values, isValid }) => (
+            {({ handleChange, errors, touched, handleBlur, handleSubmit, values, isValid, isSubmitting }) => (
                 <>
                     <View style={{ padding: 20 }}>
                         <TextInput style={styles.input}
@@ -80,7 +80,7 @@ const SignUpForm = ({ navigation }) => {
                         <Text style={styles.errorText} >
                             {errors.password && touched.password && errors.password ? errors.password : ""}
                         </Text>
-                        <Button onPress={handleSubmit} disabled={!isValid} title="Sign up" />
+                        <Button onPress={handleSubmit} disabled={!isValid} title={isSubmitting ? "Registering..." : "Sign up"} />
                     </View>
 
                     {/* bottom view */}

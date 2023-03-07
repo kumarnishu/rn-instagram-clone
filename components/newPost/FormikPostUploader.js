@@ -53,7 +53,7 @@ const FormikPostUploader = ({ navigation, user }) => {
                         }
                     }}
             >
-                {({ handleChange, errors, handleBlur, handleSubmit, values, isValid }) => (
+                {({ handleChange, errors, handleBlur, handleSubmit, values, isValid, isSubmitting }) => (
                     <ScrollView>
                         <View style={styles.imageContainer}>
                             <Image
@@ -98,7 +98,7 @@ const FormikPostUploader = ({ navigation, user }) => {
                                 {errors.caption && errors.caption ? errors.caption : ""}
                             </Text>
 
-                            <Button onPress={handleSubmit} title="Share" disabled={!isValid} />
+                            <Button onPress={handleSubmit} title={isSubmitting ? "Sharing....." : "Share"} disabled={!isValid} />
                         </View>
                     </ScrollView>
                 )}
