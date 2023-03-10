@@ -1,6 +1,6 @@
 ## instagram clone React Native And Firebase
 #Live 
-`https://silver-tarsier-b149b7.netlify.app/`
+https://silver-tarsier-b149b7.netlify.app/
 
 ## env variables
 apiKey: REACT_APP_APIKEY,
